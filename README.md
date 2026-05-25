@@ -42,11 +42,11 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 #### Step 2. Download Few-Shot Reference Samples
 - **Normal Few-Shot Reference Samples**: The few-shot reference normal samples are used for normal-based FSAD methods at inference. Please download the few-shot normal reference samples from [Google Drive](https://drive.google.com/file/d/1H0vTqzZHeSOTMEnadKls22VnjLqF7V3h/view?usp=sharing) and put these data samples in the `./dataset/data/` directory.
-- **Normal and Abnormal Few-Shot Reference Samples**: Please download the few-shot normal and abnormal reference samples from [Google Drive](https://drive.google.com/file/d/1FwzA6x7GnzD0zAtF8qmZ3Hx80lZIh8ce/view?usp=sharing) and put these data samples in the `./dataset/data/` directory.
+- **Normal and Abnormal Few-Shot Reference Samples**: Please download the few-shot normal and abnormal reference samples from [Google Drive](https://drive.google.com/file/d/1FwzA6x7GnzD0zAtF8qmZ3Hx80lZIh8ce/view?usp=sharing) and put these data samples in the `./dataset/data/` directory. 
 
 #### Step 3. Creating Json File for Each Dataset
-- **Dataset Json File**: Please run the following code for generating json file for each dataset (MVTecAD as an example):
-  ```bash
+- **Dataset Json File**: Please run the following code for generating json file for each dataset (taking the MVTecAD dataset as an example):
+  ```python
   python3 dataset/gen_mvtec_json.py --data_path ./dataset/data/MVTecAD
   ```
 
@@ -57,7 +57,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 #### Quick Inference by Checkpoint
 
-- Updating the checkpoint_path to the path of model weights:
+- Updating the checkpoint_path to the path of model weights: 
   ```python
   python3 -u infer_ours.py \
     --data_root ./dataset/data \
