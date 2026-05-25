@@ -37,7 +37,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 #### Step 1. Download Anomaly Detection Datasets
 - **Industrial Anomaly Detection Datasets**: [MVTecAD](https://www.mvtec.com/company/research/datasets/mvtec-ad), [VisA](https://github.com/amazon-science/spot-diff), [AITEX](https://www.aitex.es/afid/), [BTAD](http://avires.dimi.uniud.it/papers/btad/btad.zip), [MPDD](https://github.com/stepanje/MPDD).
-- **Medical Anomaly Detection Datasets**: [BraTS2021](https://www.kaggle.com/datasets/dschettler8854/brats-2021-task1), [Liver](https://drive.google.com/drive/folders/1AC-wWZl_K18CWL2eIxUScoSOoxT4IBuw?usp=sharing) (from [BMAD](https://arxiv.org/abs/2306.11876) benchmark), [RESC](https://drive.google.com/drive/folders/1AC-wWZl_K18CWL2eIxUScoSOoxT4IBuw?usp=sharing) (from [BMAD](https://arxiv.org/abs/2306.11876) benchmark). 
+- **Medical Anomaly Detection Datasets**: [BraTS](https://www.kaggle.com/datasets/dschettler8854/brats-2021-task1), [Liver](https://drive.google.com/drive/folders/1AC-wWZl_K18CWL2eIxUScoSOoxT4IBuw?usp=sharing) (from [BMAD](https://arxiv.org/abs/2306.11876) benchmark), [RESC](https://drive.google.com/drive/folders/1AC-wWZl_K18CWL2eIxUScoSOoxT4IBuw?usp=sharing) (from [BMAD](https://arxiv.org/abs/2306.11876) benchmark).
 - Please put these anomaly detection datasets in the `./dataset/data/` directory.
 
 #### Step 2. Download Few-Shot Reference Samples
