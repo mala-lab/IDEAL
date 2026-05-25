@@ -42,7 +42,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 #### Step 2. Download Few-Shot Reference Samples
 - **Normal Few-Shot Reference Samples**: The few-shot reference normal samples are used for normal-based FSAD methods at inference. Please download the few-shot normal reference samples from [Google Drive](https://drive.google.com/file/d/1H0vTqzZHeSOTMEnadKls22VnjLqF7V3h/view?usp=sharing) and put these data samples in the `./dataset/data/` directory.
-- **Normal and Abnormal Few-Shot Reference Samples**: Please download the few-shot normal and abnormal reference samples from [Google Drive](https://drive.google.com/drive/folders/1Fn4ODtjAs0PJdcyjdVcKkw0WB-fGOSvw?usp=sharing) and put these data samples in the `./dataset/data/` directory.
+- **Normal and Abnormal Few-Shot Reference Samples**: Please download the few-shot normal and abnormal reference samples from [Google Drive](https://drive.google.com/file/d/1FwzA6x7GnzD0zAtF8qmZ3Hx80lZIh8ce/view?usp=sharing) and put these data samples in the `./dataset/data/` directory.
 
 #### Step 3. Creating Json File for Each Dataset
 - **Dataset Json File**: Please run the following code for generating json file for each dataset (MVTecAD as an example):
