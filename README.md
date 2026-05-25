@@ -72,8 +72,8 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 ## Citation
 ```
 @article{wang2026ideal,
-    author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
     title={Beyond Normal References: Discriminative Few-Shot Anomaly Detection},
+    author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
     journal={arXiv preprint arXiv:2605.23231},
     year={2026}
 }
