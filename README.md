@@ -75,7 +75,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 ## Citation
 
-- If you would like to discuss any details about this work, please feel free to email me (huanwang1018@gmail.com) or open a GitHub issue.
+- If you would like to discuss any details about this work, please feel free to email me (huanwang1018@gmail.com) or open a GitHub issue (email is usually replied faster; sorry for any delay).
 
 - If you find this work useful, please cite our paper:
   ```bibtex
