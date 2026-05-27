@@ -71,7 +71,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 #### Training Repository
 
-- The full code will be uploaded soon.
+- The full code will be uploaded soon. Thank you for your attention.
 
 ## Citation
 
