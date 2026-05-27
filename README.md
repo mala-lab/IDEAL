@@ -6,7 +6,7 @@
 
 ![](https://img.shields.io/github/last-commit/mala-lab/IDEAL?color=blue)
 ![](https://img.shields.io/github/stars/mala-lab/IDEAL?color=yellow)
-![](https://img.shields.io/github/forks/mala-lab/IDEAL?color=lightblue)
+![](https://img.shields.io/github/forks/mala-lab/IDEAL?color=lightblue&label=Forks)
 ![](https://img.shields.io/badge/PRs-Welcome-green)
 [![arXiv](https://img.shields.io/badge/arXiv-2605.23231-b31b1b)](https://arxiv.org/abs/2605.23231)
 </div>
