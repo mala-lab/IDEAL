@@ -5,10 +5,10 @@
 <div align="center">
 
 ![](https://img.shields.io/github/last-commit/mala-lab/IDEAL?color=blue)
-![](https://img.shields.io/github/stars/mala-lab/IDEAL?color=blue)
+![](https://img.shields.io/github/stars/mala-lab/IDEAL?color=yellow)
 ![](https://img.shields.io/github/forks/mala-lab/IDEAL?color=lightblue)
-[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
+![](https://img.shields.io/badge/PRs-Welcome-green)
+[![arXiv](https://img.shields.io/badge/arXiv-2605.23231-b31b1b)](https://arxiv.org/abs/2605.23231)
 </div>
 
 Official implementation of paper [Beyond Normal References: Discriminative Few-Shot Anomaly Detection](https://arxiv.org/abs/2605.23231).
@@ -69,14 +69,20 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
     > ./outputs/n1a1_general_mvtec_2_visa_infer.log
   ```
 
-## Citation
-If you find this work useful, please cite our paper:
+#### Training Repository
 
-```bibtex
-@article{wang2026ideal,
-    title={Beyond Normal References: Discriminative Few-Shot Anomaly Detection},
-    author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
-    journal={arXiv preprint arXiv:2605.23231},
-    year={2026}
-}
-```
+- The full code will be uploaded soon.
+
+## Citation
+
+- If you would like to discuss any details about this work, please feel free to email me (huanwang1018@gmail.com) or open a GitHub issue.
+
+- If you find this work useful, please cite our paper:
+  ```bibtex
+  @article{wang2026ideal,
+      title={Beyond Normal References: Discriminative Few-Shot Anomaly Detection},
+      author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
+      journal={arXiv preprint arXiv:2605.23231},
+      year={2026}
+  }
+  ```
