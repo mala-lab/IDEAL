@@ -73,11 +73,11 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 - The full code will be uploaded soon. Thank you for your attention.
 
-## Citation
+## 📚 Citation
 
 - If you would like to discuss any details about this work, please feel free to email me (huanwang1018@gmail.com) or open a GitHub issue (email is usually replied faster; sorry for any delay).
 
-- If you find this work useful, please cite our paper:
+- If this repository or the paper is helpful to your work, please cite:
   ```bibtex
   @article{wang2026ideal,
       title={Beyond Normal References: Discriminative Few-Shot Anomaly Detection},
