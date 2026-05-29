@@ -43,18 +43,18 @@ for spec in "${jobs[@]}"; do
     IFS='|' read -r target_set test_ano_setting model_weight fs_set save_root <<<"$spec"
     read -r g <&3
     exp_name="${target_set}"
-    log_file="${save_root}/${exp_name}_${fs_set}_${test_ano_setting}_infer.log"
+    log_file="./infer_${exp_name}_${fs_set}_${model_weight}.log"
     echo "################# Queue ${target_set} (${test_ano_setting}) -> GPU ${g} ..."
 
     (
         export CUDA_VISIBLE_DEVICES=0
         trap 'echo "$g" >&3' EXIT
-        python3 -u infer_ours.py \
+        python3 -u main_infer.py \
             --data_root ./dataset/data \
             --data_target "${target_set}" \
             --test_ano_setting "${test_ano_setting}" \
-            --checkpoint_path "./outputs/${fs_set}_${test_ano_setting}_${model_weight}.pth" \
-            --backbone_name dinov2_vits14 \
+            --trace_path "./trace_${fs_set}_${model_weight}.pt" \
+            --ref_root ./dataset/data/fewshot_both_ref \
             --gpu_id 0 --n_shot "${N_SHOT}" --a_shot "${A_SHOT}" \
             --save_path "${save_root}/${fs_set}_${test_ano_setting}/${target_set}"
     ) >"${log_file}" 2>&1 &

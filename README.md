@@ -13,7 +13,7 @@
 
 Official implementation of paper [Beyond Normal References: Discriminative Few-Shot Anomaly Detection](https://arxiv.org/abs/2605.23231).
 
-## Overview
+## 🔎 Overview
 
 This paper considers a practical few-shot anomaly detection (FSAD) setting, termed **discriminative FSAD**, where a limited number of both normal and anomalous examples are available as references during inference. 
 Existing FSAD methods rely on normal-only references through normality matching, ignoring the discriminative clues in anomalous references, while directly fitting both references can overfit to the seen anomalies. 
@@ -22,7 +22,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 ![image](./figs/IDEAL_overview.png)
 
-## Setup Libraries
+## ⚙️ Setup Libraries
 
 - python >= 3.10.11
 - torch == 2.4.1
@@ -33,7 +33,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 - tqdm >= 4.64.0
 - transformers == 4.31.0
 
-## Prepare Anomaly Detection Datasets and Weights
+## 🚀 Prepare Anomaly Detection Datasets and Weights
 
 #### Step 1. Download Anomaly Detection Datasets
 - **Industrial Anomaly Detection Datasets**: [MVTecAD](https://www.mvtec.com/company/research/datasets/mvtec-ad), [VisA](https://github.com/amazon-science/spot-diff), [AITEX](https://www.aitex.es/afid/), [BTAD](http://avires.dimi.uniud.it/papers/btad/btad.zip), [MPDD](https://github.com/stepanje/MPDD).
@@ -42,7 +42,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 #### Step 2. Download Few-Shot Reference Samples
 - **Normal Few-Shot Reference Samples**: The few-shot reference normal samples are used for normal-based FSAD methods at inference. Please download the few-shot normal reference samples from [Google Drive](https://drive.google.com/file/d/1H0vTqzZHeSOTMEnadKls22VnjLqF7V3h/view?usp=sharing) and put these data samples in the `./dataset/data/` directory.
-- **Normal and Abnormal Few-Shot Reference Samples**: Please download the few-shot normal and abnormal reference samples from [Google Drive](https://drive.google.com/file/d/1FwzA6x7GnzD0zAtF8qmZ3Hx80lZIh8ce/view?usp=sharing) and put these data samples in the `./dataset/data/` directory. 
+- **Normal and Abnormal Few-Shot Reference Samples**: Please download the few-shot normal and abnormal reference samples from [Google Drive](https://drive.google.com/file/d/1-ksx4VsX9sBvP11ni06Q7sOKRsznLqVN/view?usp=sharing) and put these data samples in the `./dataset/data/` directory.
 
 #### Step 3. Creating Json File for Each Dataset
 - **Dataset Json File**: Please run the following code for generating json file for each dataset (taking the MVTecAD dataset as an example):
@@ -53,23 +53,23 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 #### Step 4. Download Pre-train Weights for Inference
 - **Download Pre-train Weights**: Please download the pre-train models from [Google Drive](https://drive.google.com/drive/folders/1xSObxwEmxU7WBCJ7kgvNywOzT3h5bPp_?usp=sharing).
 
-## Run Experiments
+## 📊 Run Experiments
 
-#### Quick Inference by Checkpoint
+#### ✅ Quick Inference
 
-- Updating the checkpoint_path to the path of model weights: 
+- Updating the checkpoint path and reference path (e.g., MVTecAD --> VisA):
   ```python
-  python3 -u infer_ours.py \
+  python3 -u main_infer.py \
     --data_root ./dataset/data \
     --data_target VisA \
     --test_ano_setting general \
-    --checkpoint_path ./outputs/n1a1_general_mvtec_2_visa.pth \
-    --backbone_name dinov2_vits14 \
+    --trace_path ./trace_n1a1_mvtec_2_visa.pt \
+    --ref_root ./dataset/data/fewshot_both_ref \
     --gpu_id 0 --n_shot 1 --a_shot 1 \
-    > ./outputs/n1a1_general_mvtec_2_visa_infer.log
+    > ./infer_VisA_n1a1_mvtec_2_visa.log 2>&1
   ```
 
-#### Training Repository
+#### ⌛️ Training Repository
 
 - The full code will be uploaded soon. Thank you for your attention.
 
@@ -79,10 +79,10 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 - If this repository or the paper is helpful to your work, please cite:
   ```bibtex
-  @article{wang2026ideal,
-      title={Beyond Normal References: Discriminative Few-Shot Anomaly Detection},
-      author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
-      journal={arXiv preprint arXiv:2605.23231},
-      year={2026}
+  @article{wang2026beyond,
+    title={Beyond Normal References: Discriminative Few-Shot Anomaly Detection},
+    author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
+    journal={arXiv preprint arXiv:2605.23231},
+    year={2026}
   }
   ```
