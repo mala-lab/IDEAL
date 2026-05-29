@@ -1,4 +1,4 @@
-Namespace(data_root='./dataset/data', data_mode='mvtec_2_visa', data_target='VisA', test_ano_setting='general', fold=1, save_path='./outputs/n1a1_general', worker=4, local_rank=0, port='1234', backbone_name='dinov2_vits14', n_shot=1, a_shot=1, epochs=20, learning_rate=0.001, weight_decay=0.0001, scheduler_type='cosine', warmup_epochs=2, grad_clip=0.0, batch_size=16, image_size=448, train_choice=500, print_freq=50, save_freq=1, gpu_id=0, seed=77, save_m=True, pro_num_thresholds=50, deviation_vectors=45, nheads=12, topk=12, topr=4, proj_alpha=0.8, g_loss_w=1.0, or_loss_w=0.8)
+Namespace(data_root='/home/wanghuan/mycode/dataset', data_target='VisA', test_ano_setting='general', save_path='./outputs/n1a1_general', worker=8, local_rank=0, port='1234', backbone_name='dinov2_vits14', n_shot=1, a_shot=1, epochs=20, learning_rate=0.001, weight_decay=0.0001, scheduler_type='cosine', warmup_epochs=2, grad_clip=0.0, batch_size=16, image_size=448, train_choice=500, print_freq=50, save_freq=1, gpu_id=0, seed=77, save_m=True, pro_num_thresholds=50, deviation_vectors=45, nheads=8, topk=12, topr=4, proj_alpha=0.8, g_loss_w=1.0, or_loss_w=0.8)
 Using cache found in /home/wanghuan/.cache/torch/hub/facebookresearch_dinov2_main
 /home/wanghuan/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/swiglu_ffn.py:43: UserWarning: xFormers is available (SwiGLU)
   warnings.warn("xFormers is available (SwiGLU)")
@@ -1112,7 +1112,6 @@ Mean                 0.9089     0.9135     0.8718     0.9781     0.4209     0.92
 ======> Validation Results:	|| I-AUROC: 0.9089, I-AP: 0.9135, I-F1max: 0.8718, P-AUROC: 0.9781, P-F1max: 0.4209, P-PRO: 0.9208, Val Loss: 3.0565
 ======> Previous Best I-AUROC: 0.9104(15) || Best P-AUROC: 0.9785(15) || Best I-F1max: 0.8747(15) || Best P-F1max: 0.4207(15)
 ----------------------------------------------------------------------------------------
-
 
 ======> LAST I-AUROC: 0.9089 || LAST P-AUROC: 0.9781
 ======> LAST I-AP: 0.9135 || LAST P-PRO: 0.9208
