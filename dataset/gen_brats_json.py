@@ -7,10 +7,10 @@ import json
 import argparse
 
 
-class BraTS2021_Loader(object):
+class BraTS_Loader(object):
     CLSNAMES = ["brain"]
 
-    def __init__(self, root="./dataset/data/BraTS2021"):
+    def __init__(self, root="./dataset/data/BraTS"):
         self.root = root
         self.meta_path = f"{root}/meta.json"
 
@@ -66,10 +66,10 @@ if __name__ == "__main__":
     parser.add_argument(
         "--data_path",
         type=str,
-        default="./dataset/data/BraTS2021",
+        default="./dataset/data/BraTS",
         help="Path to the dataset directory."
     )
     args = parser.parse_args()
 
-    runner = BraTS2021_Loader(root=args.data_path)
+    runner = BraTS_Loader(root=args.data_path)
     runner.run()

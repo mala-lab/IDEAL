@@ -28,12 +28,10 @@ init_gpu_pool "$NUM_GPUS"
 jobs=(
     'MVTecAD|general|visa_2_mvtec|n1a1|outputs'
     'VisA|general|mvtec_2_visa|n1a1|outputs'
-    'BTAD|general|mvtec_2_visa|n1a1|outputs'
-    'MPDD|general|mvtec_2_visa|n1a1|outputs'
-    'AITEX|general|mvtec_2_visa|n1a1|outputs'
-    'BraTS2021|general|mvtec_2_visa|n1a1|outputs'
-    'Liver|general|mvtec_2_visa|n1a1|outputs'
-    'RESC|general|mvtec_2_visa|n1a1|outputs'
+    'BTAD|general|mvtec_2_btad|n1a1|outputs'
+    'MPDD|general|mvtec_2_mpdd|n1a1|outputs'
+    'AITEX|general|mvtec_2_aitex|n1a1|outputs'
+    'BraTS|general|mvtec_2_brats|n1a1|outputs'
 )
 
 N_SHOT=1
@@ -43,7 +41,7 @@ for spec in "${jobs[@]}"; do
     IFS='|' read -r target_set test_ano_setting model_weight fs_set save_root <<<"$spec"
     read -r g <&3
     exp_name="${target_set}"
-    log_file="./infer_${exp_name}_${fs_set}_${model_weight}.log"
+    log_file="./${save_root}/infer_${exp_name}_${fs_set}_${model_weight}.log"
     echo "################# Queue ${target_set} (${test_ano_setting}) -> GPU ${g} ..."
 
     (

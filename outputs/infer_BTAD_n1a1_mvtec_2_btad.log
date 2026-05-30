@@ -1,0 +1,18 @@
+IDEAL-Quick Inference:
+
+Namespace(data_root='/home/wanghuan/mycode/dataset', data_target='BTAD', test_ano_setting='general', save_path='./outputs', worker=8, local_rank=0, port='1234', backbone_name='dinov2_vits14', n_shot=1, a_shot=1, ref_root='/home/wanghuan/mycode/dataset/fewshot_both_ref', epochs=20, learning_rate=0.001, weight_decay=0.01, scheduler_type='cosine', warmup_epochs=2, grad_clip=0.0, batch_size=16, image_size=448, print_freq=50, save_freq=1, gpu_id=0, seed=17, save_m=True, pro_num_thresholds=50, deviation_vectors=45, nheads=8, topk=12, topr=4, proj_alpha=0.8, g_loss_w=1.0, or_loss_w=0.8, trace_path='./trace_n1a1_mvtec_2_btad.pt') 
+
+Val classes: ['01', '02', '03'] 
+
+[refs] product=01 normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/BTAD/01/normal/0003.bmp'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/BTAD/01/abnormal/0032.bmp']
+Iteration on BTAD: 0
+[refs] product=02 normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/BTAD/02/normal/0027.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/BTAD/02/abnormal/0162.png']
+[refs] product=03 normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/BTAD/03/normal/0074.bmp'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/BTAD/03/abnormal/0025.bmp']
+
+Product              I-AUROC    I-AP       P-AUROC    P-PRO     
+01                   0.9354     0.9749     0.9376     0.5608    
+02                   0.9513     0.9926     0.9715     0.6727    
+03                   0.9929     0.9595     0.9970     0.9859    
+Mean                 0.9599     0.9757     0.9687     0.7398     
+
+======> Results on BTAD:	|| I-AUROC: 0.9599, I-AP: 0.9757, P-AUROC: 0.9687, P-PRO: 0.7398

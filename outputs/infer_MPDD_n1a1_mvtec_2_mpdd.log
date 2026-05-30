@@ -1,0 +1,24 @@
+IDEAL-Quick Inference:
+
+Namespace(data_root='/home/wanghuan/mycode/dataset', data_target='MPDD', test_ano_setting='general', save_path='./outputs', worker=8, local_rank=0, port='1234', backbone_name='dinov2_vits14', n_shot=1, a_shot=1, ref_root='/home/wanghuan/mycode/dataset/fewshot_both_ref', epochs=20, learning_rate=0.001, weight_decay=0.01, scheduler_type='cosine', warmup_epochs=2, grad_clip=0.0, batch_size=16, image_size=448, print_freq=50, save_freq=1, gpu_id=0, seed=17, save_m=True, pro_num_thresholds=50, deviation_vectors=45, nheads=8, topk=12, topr=4, proj_alpha=0.8, g_loss_w=1.0, or_loss_w=0.8, trace_path='./trace_n1a1_mvtec_2_mpdd.pt') 
+
+Val classes: ['bracket_black', 'bracket_brown', 'bracket_white', 'connector', 'metal_plate', 'tubes'] 
+
+[refs] product=bracket_black normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/bracket_black/normal/024.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/bracket_black/abnormal/006.png']
+Iteration on MPDD: 0
+[refs] product=bracket_brown normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/bracket_brown/normal/005.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/bracket_brown/abnormal/002.png']
+[refs] product=bracket_white normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/bracket_white/normal/022.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/bracket_white/abnormal/000.png']
+[refs] product=connector normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/connector/normal/017.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/connector/abnormal/003.png']
+[refs] product=metal_plate normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/metal_plate/normal/005.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/metal_plate/abnormal/011.png']
+[refs] product=tubes normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/tubes/normal/026.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MPDD/tubes/abnormal/033.png']
+
+Product              I-AUROC    I-AP       P-AUROC    P-PRO     
+bracket_black        0.7454     0.8284     0.9656     0.8999    
+bracket_brown        0.5160     0.7057     0.9453     0.8335    
+bracket_white        0.6599     0.6381     0.9958     0.9808    
+connector            0.9072     0.6990     0.9747     0.9162    
+metal_plate          1.0000     1.0000     0.9829     0.9523    
+tubes                0.9810     0.9919     0.9929     0.9735    
+Mean                 0.8016     0.8105     0.9762     0.9260     
+
+======> Results on MPDD:	|| I-AUROC: 0.8016, I-AP: 0.8105, P-AUROC: 0.9762, P-PRO: 0.9260

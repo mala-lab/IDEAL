@@ -1,0 +1,38 @@
+IDEAL-Quick Inference:
+
+Namespace(data_root='/home/wanghuan/mycode/dataset', data_target='VisA', test_ano_setting='general', save_path='./outputs', worker=8, local_rank=0, port='1234', backbone_name='dinov2_vits14', n_shot=1, a_shot=1, ref_root='/home/wanghuan/mycode/dataset/fewshot_both_ref', epochs=20, learning_rate=0.001, weight_decay=0.01, scheduler_type='cosine', warmup_epochs=2, grad_clip=0.0, batch_size=16, image_size=448, print_freq=50, save_freq=1, gpu_id=0, seed=17, save_m=True, pro_num_thresholds=50, deviation_vectors=45, nheads=8, topk=12, topr=4, proj_alpha=0.8, g_loss_w=1.0, or_loss_w=0.8, trace_path='./trace_n1a1_mvtec_2_visa.pt') 
+
+Val classes: ['candle', 'capsules', 'cashew', 'chewinggum', 'fryum', 'macaroni1', 'macaroni2', 'pcb1', 'pcb2', 'pcb3', 'pcb4', 'pipe_fryum'] 
+
+[refs] product=candle normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/candle/normal/0952.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/candle/abnormal/053.JPG']
+Iteration on VisA: 0
+[refs] product=capsules normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/capsules/normal/178.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/capsules/abnormal/038.JPG']
+[refs] product=cashew normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/cashew/normal/392.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/cashew/abnormal/037.JPG']
+[refs] product=chewinggum normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/chewinggum/normal/377.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/chewinggum/abnormal/098.JPG']
+[refs] product=fryum normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/fryum/normal/272.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/fryum/abnormal/090.JPG']
+[refs] product=macaroni1 normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/macaroni1/normal/0174.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/macaroni1/abnormal/084.JPG']
+Iteration on VisA: 50
+[refs] product=macaroni2 normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/macaroni2/normal/0215.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/macaroni2/abnormal/014.JPG']
+[refs] product=pcb1 normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pcb1/normal/0303.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pcb1/abnormal/031.JPG']
+[refs] product=pcb2 normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pcb2/normal/0705.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pcb2/abnormal/095.JPG']
+[refs] product=pcb3 normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pcb3/normal/0552.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pcb3/abnormal/032.JPG']
+Iteration on VisA: 100
+[refs] product=pcb4 normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pcb4/normal/0457.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pcb4/abnormal/040.JPG']
+[refs] product=pipe_fryum normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pipe_fryum/normal/098.JPG'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/VisA/pipe_fryum/abnormal/087.JPG']
+
+Product              I-AUROC    I-AP       P-AUROC    P-PRO     
+candle               0.8730     0.8773     0.9869     0.9663    
+capsules             0.9659     0.9783     0.9784     0.9474    
+cashew               0.9501     0.9773     0.9913     0.9687    
+chewinggum           0.9662     0.9867     0.9922     0.9322    
+fryum                0.9487     0.9762     0.9697     0.9317    
+macaroni1            0.8873     0.8796     0.9832     0.9035    
+macaroni2            0.7471     0.6984     0.9852     0.9470    
+pcb1                 0.9448     0.9208     0.9929     0.9618    
+pcb2                 0.8366     0.8388     0.9580     0.8664    
+pcb3                 0.8993     0.9143     0.9620     0.8671    
+pcb4                 0.9428     0.9156     0.9645     0.9027    
+pipe_fryum           0.9755     0.9882     0.9839     0.9857    
+Mean                 0.9114     0.9126     0.9790     0.9317     
+
+======> Results on VisA:	|| I-AUROC: 0.9114, I-AP: 0.9126, P-AUROC: 0.9790, P-PRO: 0.9317

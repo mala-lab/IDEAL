@@ -42,7 +42,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 #### Step 2. Download Few-Shot Reference Samples
 - **Normal Few-Shot Reference Samples**: The few-shot reference normal samples are used for normal-based FSAD methods at inference. Please download the few-shot normal reference samples from [Google Drive](https://drive.google.com/file/d/1H0vTqzZHeSOTMEnadKls22VnjLqF7V3h/view?usp=sharing) and put these data samples in the `./dataset/data/` directory.
-- **Normal and Abnormal Few-Shot Reference Samples**: Please download the few-shot normal and abnormal reference samples from [Google Drive](https://drive.google.com/file/d/1-ksx4VsX9sBvP11ni06Q7sOKRsznLqVN/view?usp=sharing) and put these data samples in the `./dataset/data/` directory.
+- **Normal and Abnormal Few-Shot Reference Samples**: Please download the few-shot normal and abnormal reference samples from [Google Drive](https://drive.google.com/file/d/1hCqqh5Q4il5p4Um0zEIpEkQxEjwjsoeh/view?usp=sharing) and put these data samples in the `./dataset/data/` directory.
 
 #### Step 3. Creating Json File for Each Dataset
 - **Dataset Json File**: Please run the following code for generating json file for each dataset (taking the MVTecAD dataset as an example):
@@ -66,7 +66,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
     --trace_path ./trace_n1a1_mvtec_2_visa.pt \
     --ref_root ./dataset/data/fewshot_both_ref \
     --gpu_id 0 --n_shot 1 --a_shot 1 \
-    > ./infer_VisA_n1a1_mvtec_2_visa.log 2>&1
+    > ./outputs/infer_VisA_n1a1_mvtec_2_visa.log 2>&1
   ```
 
 #### ⌛️ Training Repository

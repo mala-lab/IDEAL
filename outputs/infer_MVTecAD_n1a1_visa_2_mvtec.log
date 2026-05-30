@@ -1,0 +1,44 @@
+IDEAL-Quick Inference:
+
+Namespace(data_root='/home/wanghuan/mycode/dataset', data_target='MVTecAD', test_ano_setting='general', save_path='./outputs', worker=8, local_rank=0, port='1234', backbone_name='dinov2_vits14', n_shot=1, a_shot=1, ref_root='/home/wanghuan/mycode/dataset/fewshot_both_ref', epochs=20, learning_rate=0.001, weight_decay=0.01, scheduler_type='cosine', warmup_epochs=2, grad_clip=0.0, batch_size=16, image_size=448, print_freq=50, save_freq=1, gpu_id=0, seed=17, save_m=True, pro_num_thresholds=50, deviation_vectors=45, nheads=8, topk=12, topr=4, proj_alpha=0.8, g_loss_w=1.0, or_loss_w=0.8, trace_path='./trace_n1a1_visa_2_mvtec.pt') 
+
+Val classes: ['bottle', 'cable', 'capsule', 'carpet', 'grid', 'hazelnut', 'leather', 'metal_nut', 'pill', 'screw', 'tile', 'toothbrush', 'transistor', 'wood', 'zipper'] 
+
+[refs] product=bottle normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/bottle/normal/008.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/bottle/abnormal/010.png']
+Iteration on MVTecAD: 0
+[refs] product=cable normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/cable/normal/012.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/cable/abnormal/003.png']
+[refs] product=capsule normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/capsule/normal/006.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/capsule/abnormal/003.png']
+[refs] product=carpet normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/carpet/normal/009.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/carpet/abnormal/015.png']
+[refs] product=grid normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/grid/normal/017.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/grid/abnormal/009.png']
+[refs] product=hazelnut normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/hazelnut/normal/015.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/hazelnut/abnormal/004.png']
+[refs] product=leather normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/leather/normal/000.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/leather/abnormal/008.png']
+[refs] product=metal_nut normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/metal_nut/normal/000.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/metal_nut/abnormal/015.png']
+Iteration on MVTecAD: 50
+[refs] product=pill normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/pill/normal/005.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/pill/abnormal/006.png']
+[refs] product=screw normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/screw/normal/032.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/screw/abnormal/012.png']
+[refs] product=tile normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/tile/normal/011.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/tile/abnormal/010.png']
+[refs] product=toothbrush normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/toothbrush/normal/005.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/toothbrush/abnormal/003.png']
+[refs] product=transistor normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/transistor/normal/005.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/transistor/abnormal/008.png']
+[refs] product=wood normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/wood/normal/008.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/wood/abnormal/008.png']
+[refs] product=zipper normal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/zipper/normal/030.png'] abnormal=['/home/wanghuan/mycode/dataset/fewshot_both_ref/MVTecAD/zipper/abnormal/006.png']
+Iteration on MVTecAD: 100
+
+Product              I-AUROC    I-AP       P-AUROC    P-PRO     
+bottle               0.9788     0.9925     0.9838     0.9598    
+cable                0.9235     0.9605     0.9505     0.8956    
+capsule              0.9566     0.9917     0.9765     0.9517    
+carpet               1.0000     1.0000     0.9933     0.9852    
+grid                 1.0000     1.0000     0.9911     0.9613    
+hazelnut             0.9963     0.9980     0.9936     0.9482    
+leather              1.0000     1.0000     0.9879     0.9780    
+metal_nut            0.9964     0.9992     0.9403     0.9319    
+pill                 0.9523     0.9911     0.9703     0.9650    
+screw                0.8775     0.9535     0.9765     0.8871    
+tile                 0.9996     0.9999     0.9582     0.9189    
+toothbrush           0.9969     0.9989     0.9883     0.9457    
+transistor           0.8275     0.7535     0.8964     0.7005    
+wood                 1.0000     1.0000     0.9803     0.9655    
+zipper               0.9683     0.9911     0.9664     0.9058    
+Mean                 0.9649     0.9753     0.9702     0.9267     
+
+======> Results on MVTecAD:	|| I-AUROC: 0.9649, I-AP: 0.9753, P-AUROC: 0.9702, P-PRO: 0.9267

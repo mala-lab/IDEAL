@@ -20,7 +20,7 @@ DATA_TARGETS = [
     "BTAD",
     "MPDD",
     "AITEX",
-    "BraTS2021",
+    "BraTS",
     "Liver",
     "RESC",
 ]
