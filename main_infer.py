@@ -225,7 +225,7 @@ def run_trace_infer(args, model, dataloader, compute_pro=True, ref_loader=None):
             support_a_img,
             support_a_mask,
         ) = _unpack_trace_inputs(data, args, ref_loader)
-
+        # query_mask: used only for calculating loss on val data.
         image_level_logits, pixel_level_logits = model(
             query_image,
             query_mask,
@@ -343,4 +343,4 @@ if __name__ == "__main__":
         f"I-AP: {val_metrics['i_ap']:.4f}, "
         f"P-AUROC: {val_metrics['p_auroc']:.4f}, "
         f"P-PRO: {val_metrics['p_pro']:.4f}"
-    )
+    ) 
