@@ -254,8 +254,8 @@ def run_trace_infer(args, model, dataloader, compute_pro=True, ref_loader=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("IDEAL-Quick Inference", add_help=True)
-    parser.add_argument("--data_root", type=str, default="/home/wanghuan/mycode/dataset", help="dataset path")
-    parser.add_argument("--data_target", type=str, default="MVTecAD", choices=DATA_TARGETS)
+    parser.add_argument("--data_root", type=str, default="./dataset/data", help="dataset path")
+    parser.add_argument("--data_target", type=str, default="VisA", choices=DATA_TARGETS)
     parser.add_argument("--test_ano_setting", type=str, default="general", 
                         choices=["general", "hard"], help="test anomaly setting: general or hard")
     parser.add_argument("--save_path", type=str, default="./outputs", help="path to save results")
@@ -289,7 +289,7 @@ if __name__ == "__main__":
     parser.add_argument("--proj_alpha", type=float, default=0.8, help="alpha of proj")
     parser.add_argument("--g_loss_w", type=float, default=1.0, help="weight of dual discri_loss")
     parser.add_argument("--or_loss_w", type=float, default=0.8, help="weight of dual ortho_loss")
-    parser.add_argument("--trace_path", type=str, default="./test_ours/trace_mvtec_2_visa.pt", 
+    parser.add_argument("--trace_path", type=str, default="./trace_n1a1_mvtec_2_visa.pt", 
                         help="save path of torch.jit.trace model")
 
     args = parser.parse_args()
@@ -343,4 +343,4 @@ if __name__ == "__main__":
         f"I-AP: {val_metrics['i_ap']:.4f}, "
         f"P-AUROC: {val_metrics['p_auroc']:.4f}, "
         f"P-PRO: {val_metrics['p_pro']:.4f}"
-    )
+    ) 
