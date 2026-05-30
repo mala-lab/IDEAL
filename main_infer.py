@@ -285,7 +285,7 @@ if __name__ == "__main__":
     parser.add_argument("--deviation_vectors", type=int, default=45, help="number of deviation vectors")
     parser.add_argument("--nheads", type=int, default=8, help="num of heads")
     parser.add_argument("--topk", type=int, default=12, help="num of k")
-    parser.add_argument("--topr", "--top4", dest="topr", type=int, default=4, help="num of r")
+    parser.add_argument("--topr", type=int, default=4, help="num of r")
     parser.add_argument("--proj_alpha", type=float, default=0.8, help="alpha of proj")
     parser.add_argument("--g_loss_w", type=float, default=1.0, help="weight of dual discri_loss")
     parser.add_argument("--or_loss_w", type=float, default=0.8, help="weight of dual ortho_loss")
@@ -343,4 +343,4 @@ if __name__ == "__main__":
         f"I-AP: {val_metrics['i_ap']:.4f}, "
         f"P-AUROC: {val_metrics['p_auroc']:.4f}, "
         f"P-PRO: {val_metrics['p_pro']:.4f}"
-    ) 
+    )
