@@ -1,7 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Python version: 3.11
-
 import torch
 from torch import Tensor
 from torch.nn import functional as F
@@ -22,4 +21,3 @@ def feat_inner(
             vectors if basis else torch.linalg.svd(vectors, full_matrices=False)[2]
         )
         return (features @ vector_basis.T) @ vector_basis
-    

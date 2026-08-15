@@ -1,7 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Python version: 3.11
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -49,4 +48,3 @@ class MILossInfoNCE(nn.Module):
 
         loss = 0.5 * (loss_t2l + loss_l2t)
         return loss
-    

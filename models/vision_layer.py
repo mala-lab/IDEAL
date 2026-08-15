@@ -1,13 +1,12 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Python version: 3.11
-
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
 
-class MLPLayer(nn.Module):
+class Mlp(nn.Module):
     def __init__(
         self,
         in_features,
@@ -38,9 +37,7 @@ def drop_path(x, drop_prob: float = 0.0, training: bool = False):
     if drop_prob == 0.0 or not training:
         return x
     keep_prob = 1 - drop_prob
-    shape = (x.shape[0],) + (1,) * (
-        x.ndim - 1
-    )  # work with diff dim tensors
+    shape = (x.shape[0],) + (1,) * (x.ndim - 1)  # work with diff dim tensors
     random_tensor = keep_prob + torch.rand(shape, dtype=x.dtype, device=x.device)
     random_tensor.floor_()
     output = x.div(keep_prob) * random_tensor
@@ -48,8 +45,6 @@ def drop_path(x, drop_prob: float = 0.0, training: bool = False):
 
 
 class DropPath(nn.Module):
-    """Drop paths (Stochastic Depth) per sample"""
-
     def __init__(self, drop_prob=None):
         super(DropPath, self).__init__()
         self.drop_prob = drop_prob
@@ -131,7 +126,7 @@ class AttnBlock(nn.Module):
         self.drop_path = DropPath(drop_path) if drop_path > 0.0 else nn.Identity()
         self.norm2 = norm_layer(dim)
         mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp = MLPLayer(
+        self.mlp = Mlp(
             in_features=dim,
             hidden_features=mlp_hidden_dim,
             act_layer=act_layer,

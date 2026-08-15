@@ -11,30 +11,38 @@ import PIL.Image as Image
 import numpy as np
 
 
-class EpisodeSet(Dataset):
+class FSDataset(Dataset):
     def __init__(
         self,
-        data_root: str = "/home/wanghuan/mycode/dataset",
+        data_root: str = "/home/wanghuan/dataset",
         data_target: str = "MVTecAD",
         data_name_json: str = "meta.json",
-        split: str = "train",
-        shot: list = [1, 1],
+        split: str = "train",  # "train" or "test"
+        shot: list = [4, 1],  # 4 normal samples, 1 abnormal sample
         transform=None,
-        choice=500,  # number of train episodes
+        choice=500,
         test_ano_setting="general",  # general or hard
         set_class=None,
         target_to_target: bool = False,
+        select_ref_by_query: bool = False,
+        test_ref_object=None,
+        test_ref_anomaly_type=None,
+        a_ref_types: int = 1,
     ):
-        self.split = split
+        self.split = split  # "train" or "test"
         self.data_root = data_root
         self.set_class = set_class
         self.target_to_target = target_to_target
+        self.select_ref_by_query = select_ref_by_query
+        self.test_ref_object = test_ref_object
+        self.test_ref_anomaly_type = test_ref_anomaly_type
+        self.a_ref_types = a_ref_types
         if self.target_to_target:
             source_set = data_target
             target_set = data_target
             data = [target_set]
             self.test_ano_setting = test_ano_setting
-        elif data_target == "MVTecAD":  # visa -> mvtec
+        elif data_target == "MVTecAD":
             source_set = "VisA"
             target_set = "MVTecAD"
             data = [target_set, source_set]
@@ -55,9 +63,10 @@ class EpisodeSet(Dataset):
         self.transform = transform
         self.initialize(data)
         self.class_ids = self.build_class_ids()
+        self._validate_a_ref_types()
+        self._validate_explicit_test_reference()
         self.data_path_list = None
         if self.split == "test":
-            # freeze references
             self._ensure_all_test_schedules()
 
     def initialize(self, data):
@@ -69,7 +78,7 @@ class EpisodeSet(Dataset):
                 data_info = json.load(f)
             data_info = data_info["test"]
             products = list(data_info.keys())
-            products.sort()  # class names
+            products.sort()  # class_names
             self.all_product += products
 
             for product in products:
@@ -130,7 +139,6 @@ class EpisodeSet(Dataset):
                 ref_abnormal_specie_name,
             ) = self.load_frame_test(idx)
         else:
-            # ignores idx during training; uniform sampling over object classes
             (
                 query_tuple,
                 support_normal_tuple,
@@ -170,7 +178,7 @@ class EpisodeSet(Dataset):
             "image_level_label": query_tuple[2],
             "support_normal": support_normal_data,
             "support_abnormal": support_abnormal_data,
-            "sample_product": sample_product,
+            "sample_product": sample_product,  # class_name
             "query_type": query_type,
             "query_specie_name": query_specie_name,
             "ref_abnormal_specie_name": ref_abnormal_specie_name,
@@ -195,16 +203,17 @@ class EpisodeSet(Dataset):
             self.test_support_normal = {x: None for x in class_val}
             self.test_support_abnormal = {x: None for x in class_val}
             self.test_support_abnormal_names = {x: None for x in class_val}
+            self.test_support_abnormal_types = {x: set() for x in class_val}
             self.test_normal_idx = {x: None for x in class_val}
             self.test_abnormal_idx = {x: None for x in class_val}
             self.test_query_schedule = {}
             return class_ids
 
         if self.target_set == "MVTecAD":  # visa -> mvtec
-            class_ids_val = range(0, 15)
+            class_ids_val = range(0, 15)  # mvtec classes
             class_ids_trn = [x for x in range(self.nclass) if x not in class_ids_val]
         else:  # mvtec -> others
-            class_ids_trn = range(0, 15)
+            class_ids_trn = range(0, 15)  # mvtec classes
             class_ids_val = [x for x in range(self.nclass) if x not in class_ids_trn]
 
         class_trn = [self.all_product[i] for i in class_ids_trn]
@@ -222,6 +231,7 @@ class EpisodeSet(Dataset):
         self.test_support_normal = {x: None for x in class_val}
         self.test_support_abnormal = {x: None for x in class_val}
         self.test_support_abnormal_names = {x: None for x in class_val}
+        self.test_support_abnormal_types = {x: set() for x in class_val}
         self.test_normal_idx = {x: None for x in class_val}
         self.test_abnormal_idx = {x: None for x in class_val}
         self.test_query_schedule = {}
@@ -238,6 +248,55 @@ class EpisodeSet(Dataset):
             selected_idx = random.choices(range(n), k=num)
         selected_sample = [sample_list[i] for i in selected_idx]
         return selected_idx, selected_sample
+
+    def _validate_a_ref_types(self):
+        a_ref_types = getattr(self, "a_ref_types", 1)
+        if a_ref_types < 1:
+            raise ValueError("a_ref_types must be at least 1.")
+        if self.a_shot <= 0:
+            if a_ref_types != 1:
+                raise ValueError("a_ref_types must be 1 when a_shot=0.")
+            return
+        if a_ref_types > self.a_shot:
+            raise ValueError(
+                f"a_ref_types ({a_ref_types}) cannot exceed a_shot ({self.a_shot})."
+            )
+        if a_ref_types > 1 and self.select_ref_by_query:
+            raise ValueError("a_ref_types>1 requires select_ref_by_query=False.")
+
+    def _validate_explicit_test_reference(self):
+        object_is_set = self.test_ref_object is not None
+        type_is_set = self.test_ref_anomaly_type is not None
+        if not object_is_set and not type_is_set:
+            return
+        if object_is_set != type_is_set:
+            raise ValueError(
+                "test_ref_object and test_ref_anomaly_type must be provided together."
+            )
+        if self.split != "test":
+            raise ValueError("Explicit test reference selection requires split='test'.")
+        if self.a_shot <= 0:
+            raise ValueError("Explicit test reference selection requires a_shot > 0.")
+        if self.select_ref_by_query:
+            raise ValueError(
+                "Explicit test reference selection requires select_ref_by_query=False."
+            )
+        if getattr(self, "a_ref_types", 1) != 1:
+            raise ValueError(
+                "Explicit test reference selection requires a_ref_types=1."
+            )
+        if self.test_ref_object not in self.products:
+            raise ValueError(
+                f"Unknown test_ref_object={self.test_ref_object!r}. "
+                f"Available test objects: {sorted(self.products)}"
+            )
+        available_types = sorted(self.metadata[self.test_ref_object]["abnormal"].keys())
+        if self.test_ref_anomaly_type not in available_types:
+            raise ValueError(
+                f"Unknown test_ref_anomaly_type={self.test_ref_anomaly_type!r} "
+                f"for object {self.test_ref_object!r}. "
+                f"Available anomaly types: {available_types}"
+            )
 
     def get_sample_info(self, sample_dict):
         img_path = sample_dict["img_path"]
@@ -268,29 +327,76 @@ class EpisodeSet(Dataset):
         return image_list, mask_list, anomaly_list
 
     def _sample_abnormal_support_same_type(self, product):
-        """make all abnormal reference samples from a same anomaly type"""
         abnormal_keys = list(self.metadata[product]["abnormal"].keys())
         if self.a_shot <= 0:
             return [], [], abnormal_keys[0] if abnormal_keys else "bad"
-        ok_a = [
-            k
-            for k in abnormal_keys
-            if len(self.metadata[product]["abnormal"][k]) >= self.a_shot
-        ]
-        support_abnormal_specie_type = (
-            np.random.choice(ok_a, 1)[0]
-            if ok_a
-            else np.random.choice(abnormal_keys, 1)[0]
-        )
+        if product == getattr(self, "test_ref_object", None):
+            support_abnormal_specie_type = self.test_ref_anomaly_type
+        else:
+            ok_a = [
+                k
+                for k in abnormal_keys
+                if len(self.metadata[product]["abnormal"][k]) >= self.a_shot
+            ]
+            support_abnormal_specie_type = (
+                np.random.choice(ok_a, 1)[0]
+                if ok_a
+                else np.random.choice(abnormal_keys, 1)[0]
+            )
         pool = self.metadata[product]["abnormal"][support_abnormal_specie_type]
         support_abnormal_idx, support_abnormal = self.random_sample(pool, self.a_shot)
         pool_paths = {x["img_path"] for x in pool}
         for s in support_abnormal:
             if s["img_path"] not in pool_paths:
-                raise RuntimeError(
-                    "abnormal support should from a same specie type; but got img_path not in specie pool"
-                )
+                raise RuntimeError("abnormal support not the same abnormal-type")
         return support_abnormal_idx, support_abnormal, support_abnormal_specie_type
+
+    def _sample_abnormal_support_for_query(
+        self, product, query_specie_name, query_sample
+    ):
+        pool = self.metadata[product]["abnormal"][query_specie_name]
+        candidate_pool = [
+            sample for sample in pool if sample["img_path"] != query_sample["img_path"]
+        ]
+        if not candidate_pool:
+            candidate_pool = pool
+        _, support_abnormal = self.random_sample(candidate_pool, self.a_shot)
+        return support_abnormal, query_specie_name
+
+    def _sample_test_abnormal_support(self, product):
+        if getattr(self, "a_ref_types", 1) == 1:
+            indices, samples, anomaly_type = self._sample_abnormal_support_same_type(
+                product
+            )
+            selected_types = [anomaly_type] if self.a_shot > 0 else []
+            return indices, samples, selected_types
+
+        abnormal_keys = list(self.metadata[product]["abnormal"].keys())
+        selected_type_count = min(self.a_ref_types, len(abnormal_keys))
+        selected_types = [
+            str(anomaly_type)
+            for anomaly_type in np.random.choice(
+                abnormal_keys,
+                selected_type_count,
+                replace=False,
+            )
+        ]
+        reference_types = selected_types.copy()
+        for _ in range(self.a_shot - selected_type_count):
+            reference_types.append(str(np.random.choice(selected_types, 1)[0]))
+
+        support_abnormal_idx = []
+        support_abnormal = []
+        for anomaly_type in selected_types:
+            type_count = reference_types.count(anomaly_type)
+            type_indices, type_samples = self.random_sample(
+                self.metadata[product]["abnormal"][anomaly_type],
+                type_count,
+            )
+            support_abnormal_idx.extend(type_indices)
+            support_abnormal.extend(type_samples)
+
+        return support_abnormal_idx, support_abnormal, selected_types
 
     def _sample_abnormal_support_mixed_types(self, product):
         abnormal_keys = list(self.metadata[product]["abnormal"].keys())
@@ -328,30 +434,33 @@ class EpisodeSet(Dataset):
             self.metadata[product]["normal"][support_normal_specie_type],
             self.n_shot,
         )
-        support_abnormal_idx, support_abnormal, support_abnormal_specie_type = (
-            self._sample_abnormal_support_same_type(product)
+        support_abnormal_idx, support_abnormal, support_abnormal_specie_types = (
+            self._sample_test_abnormal_support(product)
         )
         self.test_support_normal[product] = support_normal
         self.test_normal_idx[product] = support_normal_idx
         self.test_support_abnormal[product] = support_abnormal
-        self.test_support_abnormal_names[product] = support_abnormal_specie_type
+        self.test_support_abnormal_types[product] = set(support_abnormal_specie_types)
+        self.test_support_abnormal_names[product] = "|".join(
+            support_abnormal_specie_types
+        )
         self.test_abnormal_idx[product] = support_abnormal_idx
         if self.split == "test" and self.n_shot > 0:
             n_paths = [s["img_path"] for s in support_normal]
-            # print(
-            #     f"[FSDataset test] product={product} "
-            #     f"normal_support_specie={support_normal_specie_type} "
-            #     f"n_shot={self.n_shot} indices_in_specie={support_normal_idx} "
-            #     f"paths={n_paths}"
-            # )
+            print(
+                f"[FSDataset test] product={product} "
+                f"normal_support_specie={support_normal_specie_type} "
+                f"n_shot={self.n_shot} indices_in_specie={support_normal_idx} "
+                f"paths={n_paths}"
+            )
         if self.split == "test" and self.a_shot > 0:
             ab_paths = [s["img_path"] for s in support_abnormal]
-            # print(
-            #     f"[FSDataset test] product={product} "
-            #     f"abnormal_support_specie={support_abnormal_specie_type} "
-            #     f"a_shot={self.a_shot} indices_in_specie={support_abnormal_idx} "
-            #     f"paths={ab_paths}"
-            # )
+            print(
+                f"[FSDataset test] product={product} "
+                f"abnormal_support_species={support_abnormal_specie_types} "
+                f"a_shot={self.a_shot} indices_in_specie={support_abnormal_idx} "
+                f"paths={ab_paths}"
+            )
 
     def _build_test_query_schedule(self, product):
         meta = self.metadata[product]
@@ -359,13 +468,17 @@ class EpisodeSet(Dataset):
         fixed_a = self.test_support_abnormal[product] or []
         support_paths = {s["img_path"] for s in fixed_n + fixed_a}
         ref_ab_name = self.test_support_abnormal_names[product]
+        ref_ab_types = getattr(self, "test_support_abnormal_types", {}).get(product)
+        if not ref_ab_types:
+            ref_ab_types = set(ref_ab_name.split("|")) if ref_ab_name else set()
         schedule = []
         for qtype in ("normal", "abnormal"):
             for specie in sorted(meta[qtype].keys()):
                 if (
                     qtype == "abnormal"
                     and self.test_ano_setting == "hard"
-                    and specie == ref_ab_name
+                    and not self.select_ref_by_query
+                    and specie in ref_ab_types
                 ):
                     continue
                 for i, sample in enumerate(meta[qtype][specie]):
@@ -411,9 +524,14 @@ class EpisodeSet(Dataset):
                 raise IndexError(
                     f"Test index {idx} out of range (total {self.__len__()})"
                 )
+        query_data = [self.metadata[product][qtype][qspecie][qi]]
         new_fixed_normal = self.test_support_normal[product]
         new_fixed_abnormal = self.test_support_abnormal[product]
-        query_data = [self.metadata[product][qtype][qspecie][qi]]
+        ref_abnormal_specie_name = self.test_support_abnormal_names[product]
+        if self.select_ref_by_query and qtype == "abnormal" and self.a_shot > 0:
+            new_fixed_abnormal, ref_abnormal_specie_name = (
+                self._sample_abnormal_support_for_query(product, qspecie, query_data[0])
+            )
         query_tuple = self.read_data(query_data)
         self.query_path_list = self.data_path_list.copy()
         support_normal_tuple = (0, 0, 0)
@@ -429,13 +547,11 @@ class EpisodeSet(Dataset):
             product,
             qtype,
             qspecie,
-            self.test_support_abnormal_names[product],
+            ref_abnormal_specie_name,
         )
 
     def load_frame(self):
-        assert (
-            self.split == "train"
-        ), "load_frame for training; load_frame_test(idx) for testing"
+        assert self.split == "train", "load_frame only for training"
         if self.set_class is not None:
             sample_product = self.set_class
         else:
@@ -463,7 +579,7 @@ class EpisodeSet(Dataset):
             self.metadata[sample_product]["normal"][support_normal_specie_type],
             self.n_shot,
         )
-        # normal support images
+        # Get normal support images
         support_normal_tuple = (0, 0, 0)
         if self.n_shot > 0:
             support_normal_tuple = self.read_data(support_normal)
@@ -474,7 +590,7 @@ class EpisodeSet(Dataset):
         )
         support_abnormal_paths = {s["img_path"] for s in support_abnormal}
         abnormal_keys = list(self.metadata[sample_product]["abnormal"].keys())
-        # abnormal support images
+        # Get abnormal support images
         support_abnormal_tuple = (0, 0, 0)
         if self.a_shot > 0:
             support_abnormal_tuple = self.read_data(support_abnormal)
@@ -494,7 +610,7 @@ class EpisodeSet(Dataset):
             self.load_frame()
         elif query_type == "abnormal" and q_path in support_abnormal_paths:
             self.load_frame()
-        # the query image
+        # Get query image
         query_tuple = self.read_data(query_data)
         self.query_path_list = self.data_path_list.copy()
 

@@ -124,7 +124,7 @@ def get_dataset_info(dataset):
             "03": ["ko"],
         }
 
-    elif dataset == "BraTS2021":
+    elif dataset == "BraTS":
         objects = ["brain"]
         object_anomalies = {"brain": ["lesion"]}
     else:
@@ -134,6 +134,7 @@ def get_dataset_info(dataset):
 
 
 def dists2map(dists, img_shape):
+    # resize and smooth the distance map
     dists = cv2.resize(
         dists, (img_shape[1], img_shape[0]), interpolation=cv2.INTER_LINEAR
     )

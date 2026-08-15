@@ -44,7 +44,7 @@ def _subsample_flat_pair(y_true, y_score, max_n=2_000_000, seed=0):
     return y_true[idx], y_score[idx]
 
 
-class EvaMetric(object):
+class FSMetric(object):
     def __init__(
         self,
         args,
@@ -119,7 +119,6 @@ class EvaMetric(object):
                 for product in self.products
             }
             by_product = {futures[future]: future.result() for future in futures}
-        # align with self.products
         results = [by_product[p] for p in self.products]
 
         self.results = np.array(results, dtype=np.float32)
@@ -127,7 +126,6 @@ class EvaMetric(object):
         self.mean_metrics = {
             name: float(mean_results[idx]) for idx, name in enumerate(self.metric_names)
         }
-        # backward-compatible
         return self.mean_metrics["i_auroc"], self.mean_metrics["p_auroc"]
 
     @staticmethod
@@ -163,7 +161,7 @@ class EvaMetric(object):
         precision, recall = self._f1_components(scores, labels)
         if precision.size == 0:
             return 0.0
-        # step integral over PR curve
+        # Step integral over PR curve
         precision = np.r_[1.0, precision]
         recall = np.r_[0.0, recall]
         return float(np.sum((recall[1:] - recall[:-1]) * precision[1:]))
@@ -179,15 +177,17 @@ class EvaMetric(object):
         scores = score_maps.reshape(-1).astype(np.float64)
         if scores.size == 0:
             return 0.0
+
         t_min, t_max = float(scores.min()), float(scores.max())
         if np.isclose(t_min, t_max):
             return 0.0
+
         gt_maps = gt_maps.astype(bool)
         bg_masks = ~gt_maps
         bg_total = int(bg_masks.sum())
         if bg_total <= 0:
             return 0.0
-        # avoid the memory explosion
+
         region_info = []
         for i in range(score_maps.shape[0]):
             labeled, n_regions = cc_label(gt_maps[i])
@@ -205,6 +205,7 @@ class EvaMetric(object):
         for thr in thresholds:
             pro_vals = []
             fp = 0
+
             for i in range(score_maps.shape[0]):
                 pred_i = score_maps[i] >= thr
                 fp += np.logical_and(pred_i, bg_masks[i]).sum()
@@ -231,7 +232,6 @@ class EvaMetric(object):
 
         fpr_valid = fpr_arr[valid]
         pro_valid = pro_arr[valid]
-        # ensure integration reaches max_fpr
         if fpr_valid[-1] < max_fpr:
             fpr_valid = np.r_[fpr_valid, max_fpr]
             pro_valid = np.r_[pro_valid, pro_valid[-1]]
@@ -249,6 +249,7 @@ class EvaMetric(object):
         i_auroc = _safe_roc_auc_numpy(i_gt, i_score)
         i_ap = self._average_precision(i_score, i_gt)
         i_f1_max = self._f1_max(i_score, i_gt)
+
         p_score_map = np.stack(self.stat_buffer[product]["p_score_map"])
         p_gt = np.stack(self.stat_buffer[product]["p_gt"])
         y_flat = p_gt.ravel()
@@ -270,15 +271,15 @@ class EvaMetric(object):
     def print_metrics(self):
         metrics = self.results
         print(
-            f'\n{"Product":<20} {"I-AUROC":<10} {"I-AP":<10} {"P-AUROC":<10} {"P-PRO":<10}'
+            f'{"Product":<20} {"I-AUROC":<10} {"I-AP":<10} {"I-F1max":<10} {"P-AUROC":<10} {"P-F1max":<10} {"P-PRO":<10}'
         )
         for i, product in enumerate(self.products):
             print(
-                f"{product:<20} {metrics[i][0]:<10.4f} {metrics[i][1]:<10.4f} {metrics[i][3]:<10.4f} {metrics[i][5]:<10.4f}"
+                f"{product:<20} {metrics[i][0]:<10.4f} {metrics[i][1]:<10.4f} {metrics[i][2]:<10.4f} {metrics[i][3]:<10.4f} {metrics[i][4]:<10.4f} {metrics[i][5]:<10.4f}"
             )
         metrics_mean = np.nanmean(metrics, axis=0)
         print(
-            f'{"Mean":<20} {metrics_mean[0]:<10.4f} {metrics_mean[1]:<10.4f} {metrics_mean[3]:<10.4f} {metrics_mean[5]:<10.4f} \n'
+            f'{"Mean":<20} {metrics_mean[0]:<10.4f} {metrics_mean[1]:<10.4f} {metrics_mean[2]:<10.4f} {metrics_mean[3]:<10.4f} {metrics_mean[4]:<10.4f} {metrics_mean[5]:<10.4f}'
         )
 
     def reset(self):
