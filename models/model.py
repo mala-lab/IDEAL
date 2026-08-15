@@ -36,7 +36,7 @@ class IDEAL(nn.Module):
 
         self.nheads = args.nheads
         self.pre_norm = False  # pre norm
-        self.learnable_proxies = nn.Embedding(
+        self.learnable_vectors = nn.Embedding(
             args.num_learnable_vectors, self.hidden_dim
         )
         self.cro_attn = CrossAttentionLayer(
@@ -48,7 +48,7 @@ class IDEAL(nn.Module):
         self.ffn_layer = Mlp(
             in_features=self.hidden_dim,
             hidden_features=int(self.hidden_dim * 4),
-            act_layer=nn.GELU,  # nn.ReLU? nn.GELU?
+            act_layer=nn.GELU,
             drop=0.0,
         )
         norm_layer = partial(nn.LayerNorm, eps=1e-8)
@@ -481,7 +481,7 @@ class IDEAL(nn.Module):
             anomaly_directions = self.attention_FFN_forward(
                 self.cro_attn,
                 self.ffn_layer,
-                self.learnable_proxies,  # Q
+                self.learnable_vectors,  # Q
                 support_a_feat,  # K
                 support_real_res_feat,  # V
                 support_a_mask,
