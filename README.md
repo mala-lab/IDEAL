@@ -62,7 +62,7 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 #### ✅ Quick Inference
 
-- updating the checkpoint path and reference path (e.g., training on MVTecAD and testing on VisA):
+- updating the checkpoint path and reference path (e.g., train on MVTecAD and test on VisA):
   ```python
   python3 -u main_infer.py \
     --data_root ./dataset/data \
@@ -79,10 +79,10 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 - updating the dataset path (i.e., `data_root` in train.sh):
 
   ```python
-  bash train.sh
+  bash train_v2m.sh  # v2m = train on VisA and test on MVTecAD
   ```
 
-- We thank for the code repository of [InCTRL](https://github.com/mala-lab/InCTRL), [NAGL](https://github.com/JasonKyng/NAGL), [WinCLIP](https://github.com/mala-lab/WinCLIP), and [Dinomaly](https://github.com/guojiajeremy/dinomaly).
+- we thank for the code repository of [InCTRL](https://github.com/mala-lab/InCTRL), [NAGL](https://github.com/JasonKyng/NAGL), [WinCLIP](https://github.com/mala-lab/WinCLIP), and [Dinomaly](https://github.com/guojiajeremy/dinomaly).
 
 ## 📚 Citation
 

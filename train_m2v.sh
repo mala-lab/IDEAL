@@ -1,9 +1,9 @@
 export CUDA_VISIBLE_DEVICES=0
 nohup python3 -u train.py \
-        --data_root './dataset/data' \
+        --data_root "./dataset/data" \
         --data_target "VisA" \
         --test_ano_setting "general" \
-        --backbone_name 'dinov2_vits14' \
+        --backbone_name "dinov2_vits14" \
         --epochs 20 \
         --batch_size 16 \
         --worker 8 \
@@ -11,7 +11,7 @@ nohup python3 -u train.py \
         --learning_rate 1e-3 \
         --image_size 448 \
         --weight_decay 1e-4 \
-        --scheduler_type 'cosine' \
+        --scheduler_type "cosine" \
         --warmup_epochs 2 \
         --grad_clip 0.0 \
         --n_shot 1 --a_shot 1 \
