@@ -76,17 +76,19 @@ IDEAL decomposes the learning process into two novel components: 1) a Normal Var
 
 #### ✅ Training Repository
 
-- updating the dataset path (i.e., data_root in train.sh):
+- updating the dataset path (i.e., `data_root` in train.sh):
 
   ```python
   bash train.sh
   ```
 
+- We thank for the code repository of [InCTRL](https://github.com/mala-lab/InCTRL), [NAGL](https://github.com/JasonKyng/NAGL), [WinCLIP](https://github.com/mala-lab/WinCLIP), and [Dinomaly](https://github.com/guojiajeremy/dinomaly).
+
 ## 📚 Citation
 
 - If you would like to discuss any details about this work, please feel free to email me (huanwang1018@gmail.com) or open a GitHub issue (email is usually replied faster, sorry for any delay).
 
-- If this repository or the paper is helpful to your work, please cite IDEAL:
+- If you find this paper and repository useful, please cite our paper:
   ```bibtex
   @article{wang2026beyond,
     title={Beyond Normal References: Discriminative Few-Shot Anomaly Detection},
