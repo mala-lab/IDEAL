@@ -1,5 +1,5 @@
 <div align="center">
-  <h2><b>IDEAL: Intrinsic Deviation Learning for Discriminative FSAD</b></h2>
+  <h2><b>[NeurIPS 2026] IDEAL: Intrinsic Deviation Learning for Discriminative Few-Shot Anomaly Detection</b></h2>
 </div>
 
 <div align="center">
