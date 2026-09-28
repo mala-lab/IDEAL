@@ -12,9 +12,10 @@
 
 </div>
 
-**Authors**: Huan Wang $^{1,2}$, Jun Shen $^{2,\*}$, Jun Yan $^{2}$, [Guansong Pang](https://www.guansongpang.com/) $^{1,\*}$
+**Authors**: [Huan Wang](https://hwang52.github.io/) $^{1,2}$, [Jun Shen](https://scholars.uow.edu.au/jun-shen) $^{2,\*}$, [Jun Yan](https://scholars.uow.edu.au/jun-yan) $^{2}$, [Guansong Pang](https://www.guansongpang.com/) $^{1,\*}$
 
 $^1$ Singapore Management University, $^2$ University of Wollongong
+
 ---
 
 Official implementation of NeurIPS 2026 [Beyond Normal References: Discriminative Few-Shot Anomaly Detection](https://arxiv.org/abs/2605.23231)
