@@ -12,7 +12,7 @@
 
 </div>
 
-**Authors**: Huan Wang$^{1,2,♣️}$, Jun Shen$^{2,\*}$, Jun Yan$^{2}$, Guansong Pang$^{1,\*}$
+**Authors**: Huan Wang $^{1,2}$, Jun Shen $^{2,\*}$, Jun Yan $^{2}$, Guansong Pang $^{1,\*}$
 
 $^1$ Singapore Management University, $^2$ University of Wollongong
 
