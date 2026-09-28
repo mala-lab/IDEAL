@@ -12,7 +12,9 @@
 
 </div>
 
-Official implementation of NeurIPS 2026 [Beyond Normal References: Discriminative Few-Shot Anomaly Detection](https://arxiv.org/abs/2605.23231).
+Official implementation of NeurIPS 2026 [Beyond Normal References: Discriminative Few-Shot Anomaly Detection](https://arxiv.org/abs/2605.23231)
+
+- **Give me a ⭐️ if you like it.**
 
 ## 🔎 Overview
 
