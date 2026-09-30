@@ -20,14 +20,14 @@ class FSDataset(Dataset):
         split: str = "train",  # "train" or "test"
         shot: list = [4, 1],  # 4 normal samples, 1 abnormal sample
         transform=None,
-        choice=500,
+        choice=600,
         test_ano_setting="general",  # general or hard
         set_class=None,
         target_to_target: bool = False,
         select_ref_by_query: bool = False,
         test_ref_object=None,
         test_ref_anomaly_type=None,
-        a_ref_types: int = 1,
+        a_ref_types: int = 1, # select from one anomaly type
     ):
         self.split = split  # "train" or "test"
         self.data_root = data_root

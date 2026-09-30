@@ -338,7 +338,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=16, help="batch size")
     parser.add_argument("--image_size", type=int, default=448, help="image size")
     parser.add_argument("--crop_size", type=int, default=392, help="crop size")
-    parser.add_argument("--train_choice", type=int, default=500, help="train_choice")
+    parser.add_argument("--train_choice", type=int, default=600, help="train_choice")
     parser.add_argument("--test_choice", type=int, default=-1, help="all test")
     parser.add_argument("--print_freq", type=int, default=50, help="print frequency")
     parser.add_argument("--save_freq", type=int, default=1, help="save frequency")
